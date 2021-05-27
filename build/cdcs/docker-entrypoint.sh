@@ -27,6 +27,7 @@ uwsgi --chdir /srv/curator/ \
       --gid cdcs \
       --socket /tmp/curator/curator.sock \
       --wsgi-file /srv/curator/$PROJECT_NAME/wsgi.py \
+      --touch-reload=/srv/curator/$PROJECT_NAME/wsgi.py \
       --chmod-socket=666 \
       --processes=10 \
       --enable-threads \
