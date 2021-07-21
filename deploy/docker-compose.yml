@@ -16,6 +16,8 @@ services:
       - cdcs_static:/srv/curator_static
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/${SERVER_CONF}.conf:/etc/nginx/templates/default.conf.template
+      #- ./nginx/nexuslims.nist.gov.key:/etc/nginx/cdcs.key
+      #- ./nginx/nexuslims.nist.gov.crt:/etc/nginx/cdcs.crt
   curator_mongo:
     image: mongo:${MONGO_VERSION}
     container_name: ${PROJECT_NAME}_cdcs_mongo
