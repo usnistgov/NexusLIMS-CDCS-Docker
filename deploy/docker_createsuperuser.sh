@@ -9,6 +9,9 @@ if [ $# -ge 2 ]
       then
         email=$3
     fi
+  else
+    user="admin"
+    pass="admin"
 fi
 
 docker exec $PROJECT_NAME"_cdcs" python ./manage.py shell -c  "from django.contrib.auth.models import User; User.objects.create_superuser('$user', '$email', '$pass')"
