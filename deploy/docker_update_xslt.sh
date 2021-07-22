@@ -16,4 +16,4 @@ docker exec -u root "${PROJECT_NAME}_cdcs" chown -R cdcs:cdcs /srv/curator/stati
 
 # wait until server gives a 200 response (in case it's restarting)
 SERVER_URI=${SERVER_URI} bash -c 'while [[ "$(curl -s -k -o /dev/null -w ''%{http_code}'' ${SERVER_URI})" != "200" ]]; do echo "waiting 5 seconds for ${SERVER_URI} to be available"; sleep 5; done'
-docker-compose exec cdcs python /srv/curator/update_xslt.py --url ${SERVER_URI} --username ${user} --password ${pass} --list ./static/list.xsl --detail ./static/detail.xsl
+docker-compose exec cdcs python /srv/curator/update_xslt.py --url ${SERVER_URI} --username ${user} --password ${pass} --list ./static/list.xsl --detail ./static/detail.xsl --template-name "Nexus-Microscopy-Schema"
