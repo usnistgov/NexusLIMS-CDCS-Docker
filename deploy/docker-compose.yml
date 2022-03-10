@@ -86,6 +86,7 @@ services:
       - ELASTICSEARCH_PORT=${ELASTICSEARCH_PORT:-}
     env_file:
       - ./saml2/.env
+      - ./handle/.env
     command:
       - ${PROJECT_NAME}
 
