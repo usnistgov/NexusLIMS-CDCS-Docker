@@ -60,7 +60,8 @@ services:
     volumes:
       - cdcs_socket:/tmp/curator/
       - cdcs_static:/srv/curator/static.prod
-      # - ./cdcs/${SETTINGS}.py:/srv/curator/${PROJECT_NAME}/${SETTINGS}.py
+      # - ./cdcs/test.nexuslims.nist.gov-SAML.crt:/srv/curator/certs/test.nexuslims.nist.gov-SAML.crt
+      # - ./cdcs/test.nexuslims.nist.gov-SAML.key:/srv/curator/certs/test.nexuslims.nist.gov-SAML.key
     environment:
       - DJANGO_SETTINGS_MODULE=${PROJECT_NAME}.${SETTINGS}
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
@@ -86,6 +87,7 @@ services:
       - ELASTICSEARCH_PORT=${ELASTICSEARCH_PORT:-}
     env_file:
       - ./saml2/.env
+      - ./handle/.env
     command:
       - ${PROJECT_NAME}
 

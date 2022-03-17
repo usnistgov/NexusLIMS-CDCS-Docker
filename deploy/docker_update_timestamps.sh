@@ -16,9 +16,10 @@ import pytz
 #  these can be changed by reading the Document, directly modifying 
 #  `last_change_date` (or whatever) and then running Document.save() to 
 #  commit it to the DB
+NX = "https://data.nist.gov/od/dm/nexus/experiment/v1.0"
 for i, doc in enumerate(models.Data.get_all('date')):
   e = ET.fromstring(doc.xml_content)
-  time = e.find("acquisitionActivity/startTime")
+  time = e.find(f"{{{NX}}}acquisitionActivity/{{{NX}}}startTime")
   if time is None:
     continue
   dt = datetime.fromisoformat(time.text)
