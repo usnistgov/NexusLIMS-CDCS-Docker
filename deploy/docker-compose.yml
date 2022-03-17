@@ -60,7 +60,8 @@ services:
     volumes:
       - cdcs_socket:/tmp/curator/
       - cdcs_static:/srv/curator/static.prod
-      # - ./cdcs/${SETTINGS}.py:/srv/curator/${PROJECT_NAME}/${SETTINGS}.py
+      # - ./cdcs/***REMOVED***-SAML.crt:/srv/curator/certs/***REMOVED***-SAML.crt
+      # - ./cdcs/***REMOVED***-SAML.key:/srv/curator/certs/***REMOVED***-SAML.key
     environment:
       - DJANGO_SETTINGS_MODULE=${PROJECT_NAME}.${SETTINGS}
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
