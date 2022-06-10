@@ -564,6 +564,16 @@ find the active template (schema) and update the contents of the existing XSLT f
 Like some of the other provided scripts, you will need to provide a superuser's username and password on the command 
 line when running it interactively.
 
+### `fix_permissions.sh`
+
+This script is located at the top level of the repository (rather than in the `./build` or `./deploy` folder). It is 
+included in case the [`umask`](https://en.wikipedia.org/wiki/Umask) settings on your system are too restrictive. In this
+case, if you clone this repository, the "others" permission setting may not be open enough for it to be read by the
+Docker containers. This will cause odd permission errors while trying to build or deploy the NexusLIMS code. 
+Running the `fix_permissions.sh` script will fix this by adjusting the permissions of each file in 
+the directory tree underneath it so that the "others" permission matches the "group" permission. This script only makes 
+sense to use on a Linux or Mac host.
+
 ## Appendix D: Working with the information in the CDCS database's directly
 
 With care, you can inspect and make changes to the information contained in the CDCS databases (this can be useful
