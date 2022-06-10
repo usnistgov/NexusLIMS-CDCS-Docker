@@ -17,7 +17,26 @@ front-end for NexusLIMS. The code in this repository is a fork of the deployment
 
 ## Table of Contents
 
-- [Prerequisites](#Prerequisites)
+- [Prerequisites](#prerequisites)
+- [Overall Approach](#overall-approach)
+- [1. Build Docker Image](#step-1-build-the-nexuslims-cdcs-docker-image)
+  - [Customize Build Environment](#11-customize-the-build-environment-values)
+  - [Build Image](#12-build-the-image)
+- [2. Configure the NexusLIMS Docker Container](#step-2-deploy-the-nexuslims-cdcs-application)
+  - [Customize Deploy Environment](#21-customize-the-deploy-environment-values)
+  - [Configure SAML Single Sign On (optional)](#22-optional-saml-security-assertion-markup-language-single-sign-on-sso)
+    - [Set up SAML Contacts](#221-saml-contact-person-and-organization-environment-variables)
+  - [Configure Handle Server Integration (optional)](#23-optional-handle-server-configuration-for-persistent-identifiers-pids)
+  - [Configure Other Application Settings (optional)](#24-optional-configure-other-application-settings---advanced)
+- [3. Run the NexusLIMS Application](#step-3-run-the-nexuslims-cdcs-application)
+- [4. Create CDCS Superuser](#step-4-create-a-superuser)
+- [5. Access NexusLIMS Web Application](#step-5-try-to-access-the-nexuslims-application)
+- [6. Stopping the Application](#step-6-stopping-the-nexuslims-application)
+- [Appendices](#appendix-a-troubleshooting)
+  - [Troubleshooting](#appendix-a-troubleshooting)
+  - [Configuring Additional Components](#appendix-b-additional-components)
+  - [Other Potentially Useful Scripts](#appendix-c-other-helper-scripts-included-in-this-repository)
+  - [Working with the CDCS Databases](#appendix-d-working-with-the-information-in-the-cdcs-databases-directly)
 
 ## Prerequisites
 
@@ -384,7 +403,7 @@ $ docker-compose down -v
 ```
 
 
-## Step 6: Troubleshooting
+## Appendix A: Troubleshooting
 
 ### Local deployment
 
@@ -484,7 +503,7 @@ command: "--auth --wiredTigerCacheSizeGB 8"
 More information on MongoDB RAM usage can be found in the
 [documentation](https://docs.mongodb.com/manual/faq/diagnostics/#faq-memory)
 
-## Appendix A: Additional components
+## Appendix B: Additional components
 
 Additional components can be added to the NexusLIMS CDCS stack by providing `docker-compose.yml` files for those.
 Update the `COMPOSE_FILE` variable in the `.env` file to do so. More information can be found in on this option in the
@@ -509,7 +528,7 @@ Add and fill the following environment variables:
 On linux, you will need to increase the available 
 [virtual memory](https://www.elastic.co/guide/en/elasticsearch/reference/7.x/vm-max-map-count.html).
 
-## Appendix B: Other helper scripts included in this repository
+## Appendix C: Other helper scripts included in this repository
 
 Aside from the `docker_create_superuser.sh` and `docker_set_ssl.sh` scripts described previously, there are a few other
 scripts provided that accomplish various tasks that may be of interest:
@@ -545,7 +564,7 @@ find the active template (schema) and update the contents of the existing XSLT f
 Like some of the other provided scripts, you will need to provide a superuser's username and password on the command 
 line when running it interactively.
 
-## Appendix C: Working with the information in the CDCS database's directly
+## Appendix D: Working with the information in the CDCS database's directly
 
 With care, you can inspect and make changes to the information contained in the CDCS databases (this can be useful
 when debugging or during development). The following information was documented during the development of NexusLIMS and
