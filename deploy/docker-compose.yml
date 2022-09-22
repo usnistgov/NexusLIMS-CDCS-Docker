@@ -16,8 +16,11 @@ services:
       - cdcs_static:/srv/curator_static
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/${SERVER_CONF}.conf:/etc/nginx/templates/default.conf.template
-      #- ./nginx/nexuslims.nist.gov.key:/etc/nginx/cdcs.key
-      #- ./nginx/nexuslims.nist.gov.crt:/etc/nginx/cdcs.crt
+      # If using SSL, put your SSL key and certificate into the ./nginx/ folder and uncomment the following
+      #   lines to have these files mounted into the nginx webserver container (you may need to adjust the permissions
+      #   on these files to "600" or nginx may give errors)
+      #- ./nginx/nexuslims.SSL.key:/etc/nginx/cdcs.key
+      #- ./nginx/nexuslims.SSL.crt:/etc/nginx/cdcs.crt
   curator_mongo:
     image: mongo:${MONGO_VERSION}
     container_name: ${PROJECT_NAME}_cdcs_mongo
@@ -60,7 +63,17 @@ services:
     volumes:
       - cdcs_socket:/tmp/curator/
       - cdcs_static:/srv/curator/static.prod
+
+    # if you want to customize the NexusLIMS application settings, you can override settings by uncommenting this line
+    # and setting the "SETTINGS" variable appropriately (see README.md for details)
       # - ./cdcs/${SETTINGS}.py:/srv/curator/${PROJECT_NAME}/${SETTINGS}.py
+
+    # if you need to sign SAML requests for SSO, you should put the certificate and key in the "./deploy/cdcs/" folder
+    # and uncomment the following lines to mount them into the container. The paths on the left of the ":" should be
+    # changed to whatever the names of your key/cert files are; the paths on the right side of the ":" should match
+    # the values of SAML_KEY_FILE and SAML_CERT_FILE in the "./deploy/saml2/.env" file
+      # - ./cdcs/SAML.crt:/srv/curator/certs/SAML.crt
+      # - ./cdcs/SAML.key:/srv/curator/certs/SAML.key
     environment:
       - DJANGO_SETTINGS_MODULE=${PROJECT_NAME}.${SETTINGS}
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
@@ -86,6 +99,7 @@ services:
       - ELASTICSEARCH_PORT=${ELASTICSEARCH_PORT:-}
     env_file:
       - ./saml2/.env
+      - ./handle/.env
     command:
       - ${PROJECT_NAME}
 
