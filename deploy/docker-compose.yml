@@ -21,20 +21,6 @@ services:
       #   on these files to "600" or nginx may give errors)
       #- ./nginx/nexuslims.SSL.key:/etc/nginx/cdcs.key
       #- ./nginx/nexuslims.SSL.crt:/etc/nginx/cdcs.crt
-  curator_mongo:
-    image: mongo:${MONGO_VERSION}
-    container_name: ${PROJECT_NAME}_cdcs_mongo
-    restart: always
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ADMIN_USER}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ADMIN_PASS}
-      - MONGO_INITDB_DATABASE=${MONGO_DB}
-      - MONGO_USER=${MONGO_USER}
-      - MONGO_PASS=${MONGO_PASS}
-    volumes:
-      - mongo_data:/data/db/
-      - ./mongo/mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh:ro
-    command: "--auth"
   curator_postgres:
     image: postgres:${POSTGRES_VERSION}
     container_name: ${PROJECT_NAME}_cdcs_postgres
@@ -57,7 +43,6 @@ services:
     container_name: ${PROJECT_NAME}_cdcs
     restart: always
     depends_on:
-      - curator_mongo
       - curator_redis
       - curator_postgres
     volumes:
@@ -94,17 +79,14 @@ services:
       - REDIS_PORT=${REDIS_PORT:-6379}
       - REDIS_PASS=${REDIS_PASS}
       - UWSGI_PROCESSES=${UWSGI_PROCESSES:-10}
-      - MONITORING_SERVER_URI=${MONITORING_SERVER_URI:-}
-      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST:-}
-      - ELASTICSEARCH_PORT=${ELASTICSEARCH_PORT:-}
     env_file:
       - ./saml2/.env
       - ./handle/.env
+      - ./extra/.env
     command:
       - ${PROJECT_NAME}
 
 volumes:
-  mongo_data:
   postgres_data:
   redis_data:
   cdcs_socket:
