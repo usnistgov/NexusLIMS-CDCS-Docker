@@ -22,11 +22,16 @@ for i, doc in enumerate(models.Data.get_all('date')):
   time = e.find(f"{{{NX}}}acquisitionActivity/{{{NX}}}startTime")
   if time is None:
     continue
-  dt = datetime.fromisoformat(time.text)
-  print(f"Updating document {i+1} to {dt}")
-  dt = pytz.timezone('America/New_York').localize(dt).astimezone(pytz.UTC)  
-  doc.creation_date = dt
-  doc.last_modification_date = dt
-  doc.last_change_date = dt
-  doc.save()
+  try:
+    dt = datetime.fromisoformat(time.text)
+    print(f"Updating document {i+1} to {dt}")
+    if dt.tzinfo is None:
+      dt = pytz.timezone('America/New_York').localize(dt).astimezone(pytz.UTC)
+    doc.creation_date = dt
+    doc.last_modification_date = dt
+    doc.last_change_date = dt
+    doc.save()
+  except Exception as e:
+    print(f"ERROR updating doument {i+1} to {dt}: {e}")
+    continue
 EOF
