@@ -15,6 +15,11 @@ front-end for NexusLIMS. The code in this repository is a fork of the deployment
 [CDCS development team](https://github.com/usnistgov/cdcs-docker/), customized and further documented for use with the
 [NexusLIMS CDCS](https://github.com/usnistgov/nexuslims-cdcs) code.
 
+> [!IMPORTANT]
+> **Nexus Data Orchestra**
+>
+> This repository is part of the Nexus Data Orchestra project family. See the project hub: [Nexus-Data-Orchestra-NDO](https://github.com/usnistgov/Nexus-Data-Orchestra-NDO).
+
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
